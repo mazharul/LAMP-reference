@@ -1,0 +1,1320 @@
+<!--
+The file is copied from as it is, will change later
+@Author: @jerng (Added by @Maz)
+@Modification Date: May 9th 2011, 05:48PM
+
+Main file can be found here (https://docs.google.com/document/pub?id=1ksDMSDjaI81jRoSnWzO-oo86nhntwMjAo-8T8vfY6IQ)
+-->
+
+
+
+ anything as the root user, instead of as yourself:
+$ sudo anything
+Algebraically add the date and time to a new filename:
+$ whatever `date +%Y-%m-%d-%H%M-%Z%z` whatever
+Become the root user:
+$ sudo -i
+Copy from a MySQL database to a .sql file:
+$ mysqldump -C -user=username --password=password databasename > sqlfilename.sql
+(This method is insecure and exposes the password momentarily in the
+process table.)
+(--defaults-extra-file=
+YOURMYDOTCNFFILENAMEWHEREUSERANDPASSWORDARESTORED DATABASENAME
+--ignore-table=DATABASENAME.
+TABLENAME)
+(--all-databases, -A > sqlfilename.sql is useful!)
+(-C compress)
+Copy from a .sql file to a MySQL database:
+$ mysql --user=USERNAME --password=PASSWORD DATABASENAME
+--ignore-table=DATABASENAME.TABLENAME < FILENAME
+Copy from a MySQL database to a MySQL database:
+$ mysqldump -C --host=SERVERURIOFORIGIN --user=USERNAME
+--password=PASSWORD ORIGINDATABASENAME | mysql
+--host=SERVERURIOFDESTINATION --user=USERNAME --password=PASSWORD
+DESTINATIONDATABASENAME
+(ensure that users have access on both sides!)
+Copy a file across two machines:
+$ scp username@uri:unixpathtoorigin username@uri:unixpathtodestination
+Tarball files:
+$ tar -caf unixpathtodestination unixpathtoorigin
+(c:create, a:auto-compress based on destination filename extension,
+f:filesystem not tape media)
+(you may append: --exclude "unixpathtoexclusion1" --exclude
+"unixpathtoexclusion2")
+List Tarball contents
+$ tar -tvf unixpathtoorigin
+(-tzvf may be required if file is .gz)
+Un-Tarball file:
+$ tar -xf unixpathtoorigin
+(extracts them to current (.) directory?)
+# get system disk information
+di
+#List directory size:
+#(s:summarise, h:humanreadable)
+ $ du -sh
+#List disk usage:
+#(shows % of usage)
+#(add "| sort -nr" to show in descending order by size)
+#(Recursively!) List files older than 7 days ago:
+ $ df -h
+# list largest installed packages
+$ sudo apt-get install debian-goodies
+$ dpigs
+$ find unixpathtofiles -mtime +7 -print
+(Recursively!) List and Remove files older than 7 days ago:
+$ find unixpathtofiles -mtime +7 -print -exec rm {} \;
+(Recursively!) Remove files (without listing) older than 7 days ago:
+$ find unixpathtofiles -mtime +7 -exec rm {} \;
+Modify file/directory ownership recursively:
+$ chown -R username:groupname unixpathtotarget
+Modify file/directory access-rights code recursively:
+$ chmod -R code unixpathtotarget
+(code: consists of 3 digits - userprivileges, groupprivileges,
+everybodyelseprivileges)
+(each digit: may have the value 4 (read), 2 (write), 1 (execute), 0
+(none), or the sum of any such values that coexist)
+* * * * * * * * * *
+* UBUNTU SPECIFIC:
+* * * * * * * * * *
+Automatically update the GRUB2 boot menu entries:
+$ sudo update-grub
+Manually Modify the GRUB2 boot menu entries:
+$ sudo vi /boot/grub/grub.cfg
+(if you have multiple partitions, you need to do this on the partition
+that holds GRUB2, probably the one where you most recently installed a
+copy of Ubuntu)
+Create a user and its primary group:
+$ adduser username
+Delete a user and its primary group:
+$ deluser username
+(does not delete their home directory)
+Change current user's password:
+$ passwd
+Lock/Unlock a user's account (applies to the root user too):
+$ passwd -l username
+$ passwd -u username
+Create a custom group:
+$ addgroup groupname
+Delete a custom group:
+$ delgroup groupname
+Add an existing user to a group:
+$ adduser username groupname
+Add an existing user to the root user's group:
+$ adduser username admin
+List members in a group:
+$ members groupname
+Modify/Remove existing group members:
+$ vi /etc/group
+Add an existing user to the root group:
+$ adduser username admin
+SVN Checkout
+ e.g.
+ cd ~/
+ mkdir tmp
+ cd tmp
+ svn checkout file:///src/ukuya/trunk    (or: svn co file:///src/dev2.15)
+SymLink
+ln -s /path/to/real/file /path/to/non-existant/file
+to remove, just rm as usual
+SSHfs
+sshfs username@192.168.1.253:/var/www/cronus_personal <folder location>
+Main configuration files:
+/etc/apache2/apache2.conf
+/etc/apache2/httpd.conf
+screen
+Ctrl+a,| splits the viewport
+Ctrl+a,tab and Ctrl+a,shift+tab navigates between viewports
+Ctrl+a,c creates a new window
+Ctrl+a,n and Ctrl+a,shift+n flips the window in the current viewport
+Create Distribution (new user login) / Backup (unchanged logins) to ISO:
+http://www.geekconnection.org/remastersys/ubuntu.html
+1 of 2
+screen Quick Reference
+Getting in
+start a new screen session:screen
+attach to a running session: screen -r
+the “ultimate attach”: screen -dRR (Attaches to a screen session. If
+the session isattached elsewhere, detaches that other display. If no
+session exists, creates one. Ifmultiple sessions exist, uses the first
+one.)
+Escape key
+All screen commnds are prefixed by an escape key, by default C-a
+(that’s Control-a,
+sometimes written ^A). To send a literal C-a to the programs in
+screen, use C-a a.
+Getting out
+detach: C-a d
+exit screen: exit all of the programs in screen.
+force-exit screen: C-a C-\ (not recommended)
+Help
+See help: C-a ? (lists keybindings)
+Window Management
+create new window: C-a c
+change to last active window: C-a C-a
+change to window by number: C-a <number> (only for windows 0 to 9)
+change to window by number or name: C-a ' <number or title>
+change to next window in list: C-a n
+change to previous window in list: C-a p
+see window list: C-a "
+kill current window: C-a k (not recommended)
+Split screen
+split display: C-a S
+jump to next display region: C-a tab
+remove current region: C-a X
+remove all regions but the current one: C-a Q
+Misc
+redraw window: C-a C-l
+enter copy mode: C-a [ (also used for viewing scrollback buffer)
+paste: C-a ]
+monitor window for activity: C-a M
+monitor window for silence: C-a _
+enter digraph: C-a C-v
+lock (password protect) display: C-a x
+enter screen command: C-a :
+#Resize the monitor resolution of a VirtualBox Guest Ubuntu OS:
+#1. mount the VBOXADDITIONS cd
+#2. run the appropriate .run file
+#3. modified /etc/X11/xorg.conf
+#4. Replace the "Screen" section with something like this, then
+customise the resolution and reboot.
+#
+#Section "Screen"
+#  Identifier   "Default Screen"
+#  Monitor      "Configured Monitor"
+#  Device      "Configured Video Device"
+#  DefaultDepth    24
+#  SubSection      "Display"
+#     Depth           24
+#     Modes           "1280x1024"
+#  EndSubSection
+#EndSection
+# on ubuntu9.04, upgrading from subversion 1.5 to 1.6
+sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 6298AD34413576CB
+#deb http://ppa.launchpad.net/anders-kaseorg/subversion-1.6/ubuntu jaunty main
+#deb-src http://ppa.launchpad.net/anders-kaseorg/subversion-1.6/ubuntu
+jaunty main
+# on virtualbox, allow guest to connect to router and get an address via DHCP
+# switch Network Adapter to Bridge
+# on virtualbox, move system to a larger hard drive
+# typically, use a dynamically expanding virtual hard drive, with an
+arbitrarily large size
+# if really stuck to the outer limits of that drive, mount a new
+virtual hard drive as defined above then migrate the system using
+gparted
+# boot from new virtual hard drive
+# turn a USB drive or other physical partition into a bootable .VMDK
+file using VirtualBox
+sudo VBoxManage internalcommands createrawvmdk -filename
+/root/.VirtualBox/HardDisks/PREFERREDFILENAME.vmdk -rawdisk
+/dev/SDWHATEVERHERE -register
+#rsync
+rsync --verbose  --progress --stats --compress \
+  --recursive --times --perms --links --delete \
+  --password-file <password_file> \
+  <backups_directory> <user>@<remote_host>::<module_name>
+#Let’s see the various switches meaning:
+#–verbose Turn on verbose output
+#–progress show progress during transfer
+#–stats give some file-transfer stats
+#–compress With this option, rsync compresses the file data as it is
+sent to the destination machine, which reduces the amount of data
+being transmitted.
+#–recursive recurse into directories
+#-times preserve modification times
+#–perms preserve permissions
+# –links  copy symlinks as symlinks
+#–delete delete extraneous files from dest dirs
+# –password-file <password_file> This option allows you to provide a
+password in a file for accessing an rsync daemon. The file must not be
+world read- able. It should contain just the password as a single
+line. For example:
+##su
+##echo MyPassword > secretFile
+##chmod 600 secretFile
+##<backups_directory>
+#specifies the directory that contains the files to be transferred,
+for example /backups/*
+##<user>@<remote_host>::<module_name>
+#specifies the user name, the remote host and the rsync server module
+name to use, for #examplejohn@www.mybackupserver.com::backups_storage
+#Ubuntu & quick installation of the LAMP server
+#(don’t forget the caret)
+sudo apt-get install lamp-server^
+# Ubuntu & phpmyadmin
+# after installing lamp-server^ as above
+sudo apt-get install phpmyadmin
+ln -s /usr/share/phpmyadmin /var/www/phpmyadmin
+#Ubuntu & lamp-server^ & CakePHP - enabling mod_rewrite
+sudo a2enmod rewrite
+sudo vi /etc/apache2/sites-enabled/000-default
+# then change all instances of “AllowOverride None” to “AlloOverride All”
+sudo /etc/init.d/apache2 force-reload
+#or
+#sudo /etc/init.d/apache2 restart
+#Ubuntu & lamp-server (replacing MySQL (mysql) with postgres (psql); installing a PHPMyAdmin equivalent called PGAdmin) & CakePHP
+sudo apt-get install postgresql php5-pgsql pgadmin3
+# remember to check app/config/database.php for the ‘schema’ key in the configuration array
+# CakePHP shells
+# 1. add this file to the standard library under app/vendors/cakeshell.sh
+#!/bin/bash
+TERM=dumb
+export TERM
+cmd="cake"
+while [ $# -ne 0 ]; do
+        if [ "$1" = "-cli" ] || [ "$1" = "-console" ]; then
+                PATH=$PATH:$2
+                shift
+        else
+                cmd="${cmd} $1"
+        fi
+        shift
+done
+$cmd
+# shells in app/vendors/shells/xyz.php may be run as
+$ /var/www/next/app/vendors/cakeshell.sh xyz -cli /usr/bin -console /var/www/next/cake/console -app /var/www/next/app >> ~/Desktop/cakeshell.log
+#psql create database
+createdb -Uusername databasename
+#psql import data from .sql file to database
+psql -Uusername databasename -f fullpathtosqlfile
+#PostGres
+# Ubuntu can't connect to DNS
+sudo vi /etc/resolv.conf
+# TEMPORARY solution: add the following lines, which is google's dns
+nameserver 8.8.8.8
+# save then
+sudo ifdown -a
+sudo ifup -a
+# PERSISTENT solution:
+sudo apt-get install resolvconf
+sudo vi /etc/resolvconf/resolv.conf.d/base
+# type in the temporary solution here
+# reboot then check to see if it worked
+# get hard drive UUIDs
+ls -l /dev/disk/by-uuid
+# or
+blkid /dev/sda1
+# or
+vol_id -u /dev/sda1
+# generate UUID
+uuidgen
+# change hard drive UUID
+# if the address of the disc is /dev/sda1
+# and where UUID is the output of
+tune2fs /dev/sda1 -U UUID
+Here’s the quick and easy way to re-enable Grub.
+1) Boot off the LiveCD
+2) Open a Terminal and type in the following commands, noting that the
+first command will put you into the grub “prompt”, and the next 3
+commands will be executed there. Also note that hd0,0 implies the
+first hard drive and the first partition on that drive, which is where
+you probably installed grub to during installation. If not, then
+adjust accordingly.
+sudo grub
+> root (hd0,0)
+> setup (hd0)
+> exit
+# see running CPU processes
+top
+# change kernal scheduler priority (CPI priority?)
+# minimum priority for PID=someNumber
+renice +20 PID
+# maximum priority for PID=someNumber
+renice -20 PID
+# see i/o (disc) priority, for process=PID
+ionice -pPID
+# set i/o (disc) priority, for process=PID
+# set priority: real time
+ionice -c1 -pPID
+# set priority: best effort
+ionice -c2 -pPID
+# set priority: idle
+ionice -c3 -pPID
+# set a limit on cpu consumption per process
+sudo apt-get install cpulimit
+# create bootable usb drives
+sudo apt-get install unetbootin
+# get hardware information and benchmarks in GUI
+hardinfo
+# get RAM information
+sudo dmidecode --type 17
+Do anything as the root user, instead of as yourself:
+$ sudo anything
+Algebraically add the date and time to a new filename:
+$ whatever `date +%Y-%m-%d-%H%M-%Z%z` whatever
+Become the root user:
+$ sudo -i
+Copy from a MySQL database to a .sql file:
+$ mysqldump -C -user=username --password=password databasename > sqlfilename.sql
+(This method is insecure and exposes the password momentarily in the
+process table.)
+(--defaults-extra-file=
+YOURMYDOTCNFFILENAMEWHEREUSERANDPASSWORDARESTORED DATABASENAME
+--ignore-table=DATABASENAME.
+TABLENAME)
+(--all-databases, -A > sqlfilename.sql is useful!)
+(-C compress)
+Copy from a .sql file to a MySQL database:
+$ mysql --user=USERNAME --password=PASSWORD DATABASENAME
+--ignore-table=DATABASENAME.TABLENAME < FILENAME
+Copy from a MySQL database to a MySQL database:
+$ mysqldump -C --host=SERVERURIOFORIGIN --user=USERNAME
+--password=PASSWORD ORIGINDATABASENAME | mysql
+--host=SERVERURIOFDESTINATION --user=USERNAME --password=PASSWORD
+DESTINATIONDATABASENAME
+(ensure that users have access on both sides!)
+Copy a file across two machines:
+$ scp username@uri:unixpathtoorigin username@uri:unixpathtodestination
+Tarball files:
+$ tar -caf unixpathtodestination unixpathtoorigin
+(c:create, a:auto-compress based on destination filename extension,
+f:filesystem not tape media)
+(you may append: --exclude "unixpathtoexclusion1" --exclude
+"unixpathtoexclusion2")
+List Tarball contents
+$ tar -tvf unixpathtoorigin
+(-tzvf may be required if file is .gz)
+Un-Tarball file:
+$ tar -xf unixpathtoorigin
+(extracts them to current (.) directory?)
+# get system disk information
+di
+#List directory size:
+#(s:summarise, h:humanreadable)
+ $ du -sh
+#List disk usage:
+#(shows % of usage)
+#(add "| sort -nr" to show in descending order by size)
+#(Recursively!) List files older than 7 days ago:
+ $ df -h
+$ find unixpathtofiles -name PATTERN
+$ find unixpathtofiles -mtime +7 -print
+(Recursively!) List and Remove files older than 7 days ago:
+$ find unixpathtofiles -mtime +7 -print -exec rm {} \;
+(Recursively!) Remove files (without listing) older than 7 days ago:
+$ find unixpathtofiles -mtime +7 -exec rm {} \;
+Modify file/directory ownership recursively:
+$ chown -R username:groupname unixpathtotarget
+Modify file/directory access-rights code recursively:
+$ chmod -R code unixpathtotarget
+(code: consists of 3 digits - userprivileges, groupprivileges,
+everybodyelseprivileges)
+(each digit: may have the value 4 (read), 2 (write), 1 (execute), 0
+(none), or the sum of any such values that coexist)
+* * * * * * * * * *
+* UBUNTU SPECIFIC:
+* * * * * * * * * *
+Automatically update the GRUB2 boot menu entries:
+$ sudo update-grub
+Manually Modify the GRUB2 boot menu entries:
+$ sudo vi /boot/grub/grub.cfg
+(if you have multiple partitions, you need to do this on the partition
+that holds GRUB2, probably the one where you most recently installed a
+copy of Ubuntu)
+Create a user and its primary group:
+$ adduser username
+Delete a user and its primary group:
+$ deluser username
+(does not delete their home directory)
+Change current user's password:
+$ passwd
+Lock/Unlock a user's account (applies to the root user too):
+$ passwd -l username
+$ passwd -u username
+Create a custom group:
+$ addgroup groupname
+Delete a custom group:
+$ delgroup groupname
+Add an existing user to a group:
+$ adduser username groupname
+Add an existing user to the root user's group:
+$ adduser username admin
+List members in a group:
+$ members groupname
+Modify/Remove existing group members:
+$ vi /etc/group
+Add an existing user to the root group:
+$ adduser username admin
+SVN Checkout
+ e.g.
+ cd ~/
+ mkdir tmp
+ cd tmp
+ svn checkout file:///src/ukuya/trunk    (or: svn co file:///src/dev2.15)
+SymLink
+ln -s /path/to/real/file /path/to/non-existant/file
+to remove, just rm as usual
+SSHfs
+sshfs username@192.168.1.253:/var/www/cronus_personal <folder location>
+Main configuration files:
+/etc/apache2/apache2.conf
+/etc/apache2/httpd.conf
+screen
+Ctrl+a,| splits the viewport
+Ctrl+a,tab and Ctrl+a,shift+tab navigates between viewports
+Ctrl+a,c creates a new window
+Ctrl+a,n and Ctrl+a,shift+n flips the window in the current viewport
+Create Distribution (new user login) / Backup (unchanged logins) to ISO:
+http://www.geekconnection.org/remastersys/ubuntu.html
+1 of 2
+screen Quick Reference
+Getting in
+start a new screen session:screen
+attach to a running session: screen -r
+the “ultimate attach”: screen -dRR (Attaches to a screen session. If
+the session isattached elsewhere, detaches that other display. If no
+session exists, creates one. Ifmultiple sessions exist, uses the first
+one.)
+Escape key
+All screen commnds are prefixed by an escape key, by default C-a
+(that’s Control-a,
+sometimes written ^A). To send a literal C-a to the programs in
+screen, use C-a a.
+Getting out
+detach: C-a d
+exit screen: exit all of the programs in screen.
+force-exit screen: C-a C-\ (not recommended)
+Help
+See help: C-a ? (lists keybindings)
+Window Management
+create new window: C-a c
+change to last active window: C-a C-a
+change to window by number: C-a <number> (only for windows 0 to 9)
+change to window by number or name: C-a ' <number or title>
+change to next window in list: C-a n
+change to previous window in list: C-a p
+see window list: C-a "
+kill current window: C-a k (not recommended)
+Split screen
+split display: C-a S
+jump to next display region: C-a tab
+remove current region: C-a X
+remove all regions but the current one: C-a Q
+Misc
+redraw window: C-a C-l
+enter copy mode: C-a [ (also used for viewing scrollback buffer)
+paste: C-a ]
+monitor window for activity: C-a M
+monitor window for silence: C-a _
+enter digraph: C-a C-v
+lock (password protect) display: C-a x
+enter screen command: C-a :
+#Resize the monitor resolution of a VirtualBox Guest Ubuntu OS:
+#1. mount the VBOXADDITIONS cd
+#2. run the appropriate .run file
+#3. modified /etc/X11/xorg.conf
+#4. Replace the "Screen" section with something like this, then
+customise the resolution and reboot.
+#
+#Section "Screen"
+#  Identifier   "Default Screen"
+#  Monitor      "Configured Monitor"
+#  Device      "Configured Video Device"
+#  DefaultDepth    24
+#  SubSection      "Display"
+#     Depth           24
+#     Modes           "1280x1024"
+#  EndSubSection
+#EndSection
+# on ubuntu9.04, upgrading from subversion 1.5 to 1.6
+sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 6298AD34413576CB
+#deb http://ppa.launchpad.net/anders-kaseorg/subversion-1.6/ubuntu jaunty main
+#deb-src http://ppa.launchpad.net/anders-kaseorg/subversion-1.6/ubuntu
+jaunty main
+# on virtualbox, allow guest to connect to router and get an address via DHCP
+# switch Network Adapter to Bridge
+# on virtualbox, move system to a larger hard drive
+# typically, use a dynamically expanding virtual hard drive, with an
+arbitrarily large size
+# if really stuck to the outer limits of that drive, mount a new
+virtual hard drive as defined above then migrate the system using
+gparted
+# boot from new virtual hard drive
+# turn a USB drive or other physical partition into a bootable .VMDK
+file using VirtualBox
+sudo VBoxManage internalcommands createrawvmdk -filename
+/root/.VirtualBox/HardDisks/PREFERREDFILENAME.vmdk -rawdisk
+/dev/SDWHATEVERHERE -register
+# clone a .VDI virtualbox disk file
+$ VBoxManage clonevdi SOURCE_FILE_FULLPATH DESTINATION_FILE_FULLPATH
+#rsync
+rsync --verbose  --progress --stats --compress \
+  --recursive --times --perms --links --delete \
+  --password-file <password_file> \
+  <backups_directory> <user>@<remote_host>::<module_name>
+#Let’s see the various switches meaning:
+#–verbose Turn on verbose output
+#–progress show progress during transfer
+#–stats give some file-transfer stats
+#–compress With this option, rsync compresses the file data as it is
+sent to the destination machine, which reduces the amount of data
+being transmitted.
+#–recursive recurse into directories
+#-times preserve modification times
+#–perms preserve permissions
+# –links  copy symlinks as symlinks
+#–delete delete extraneous files from dest dirs
+# –password-file <password_file> This option allows you to provide a
+password in a file for accessing an rsync daemon. The file must not be
+world read- able. It should contain just the password as a single
+line. For example:
+##su
+##echo MyPassword > secretFile
+##chmod 600 secretFile
+##<backups_directory>
+#specifies the directory that contains the files to be transferred,
+for example /backups/*
+##<user>@<remote_host>::<module_name>
+#specifies the user name, the remote host and the rsync server module
+name to use, for #examplejohn@www.mybackupserver.com::backups_storage
+# Ubuntu & phpmyadmin
+# remember to ln -s /usr/share/phpmyadmin /var/www/phpmyadmin
+# Ubuntu can't connect to DNS
+sudo vi /etc/resolv.conf
+# TEMPORARY solution: add the following lines, which is google's dns
+nameserver 8.8.8.8
+# save then
+sudo ifdown -a
+sudo ifup -a
+# PERSISTENT solution:
+sudo apt-get install resolvconf
+sudo vi /etc/resolvconf/resolv.conf.d/base
+# type in the temporary solution here
+# reboot then check to see if it worked
+# get hard drive UUIDs
+ls -l /dev/disk/by-uuid
+# or
+blkid /dev/sda1
+# or
+vol_id -u /dev/sda1
+# generate UUID
+uuidgen
+# change hard drive UUID
+# if the address of the disc is /dev/sda1
+# and where UUID is the output of
+tune2fs /dev/sda1 -U UUID
+Here’s the quick and easy way to re-enable Grub.
+1) Boot off the LiveCD
+2) Open a Terminal and type in the following commands, noting that the
+first command will put you into the grub “prompt”, and the next 3
+commands will be executed there. Also note that hd0,0 implies the
+first hard drive and the first partition on that drive, which is where
+you probably installed grub to during installation. If not, then
+adjust accordingly.
+sudo grub
+> root (hd0,0)
+> setup (hd0)
+> exit
+# see running CPU processes
+top
+# more succinct CPU usage, per processor, per second
+sudo apt-get install mpstat
+mpstat -P ALL 1
+# change kernal scheduler priority (CPI priority?)
+# minimum priority for PID=someNumber
+renice +20 PID
+# maximum priority for PID=someNumber
+renice -20 PID
+# see i/o (disc) priority, for process=PID
+ionice -pPID
+# set i/o (disc) priority, for process=PID
+# set priority: real time
+ionice -c1 -pPID
+# set priority: best effort
+ionice -c2 -pPID
+# set priority: idle
+ionice -c3 -pPID
+# set a limit on cpu consumption per process
+sudo apt-get install cpulimit
+# create bootable usb drives
+sudo apt-get install unetbootin
+# get hardware information and benchmarks in GUI
+hardinfo
+# get RAM information
+sudo dmidecode --type 17
+Do anything as the root user, instead of as yourself:
+$ sudo anything
+Algebraically add the date and time to a new filename:
+$ whatever `date +%Y-%m-%d-%H%M-%Z%z` whatever
+Become the root user:
+$ sudo -i
+Copy from a MySQL database to a .sql file:
+$ mysqldump -C -user=username --password=password databasename > sqlfilename.sql
+(This method is insecure and exposes the password momentarily in the
+process table.)
+(--defaults-extra-file=
+YOURMYDOTCNFFILENAMEWHEREUSERANDPASSWORDARESTORED DATABASENAME
+--ignore-table=DATABASENAME.
+TABLENAME)
+(--all-databases, -A > sqlfilename.sql is useful!)
+(-C compress)
+Copy from a .sql file to a MySQL database:
+$ mysql --user=USERNAME --password=PASSWORD DATABASENAME
+--ignore-table=DATABASENAME.TABLENAME < FILENAME
+Copy from a MySQL database to a MySQL database:
+$ mysqldump -C --host=SERVERURIOFORIGIN --user=USERNAME
+--password=PASSWORD ORIGINDATABASENAME | mysql
+--host=SERVERURIOFDESTINATION --user=USERNAME --password=PASSWORD
+DESTINATIONDATABASENAME
+(ensure that users have access on both sides!)
+Copy a file across two machines:
+$ scp username@uri:unixpathtoorigin username@uri:unixpathtodestination
+Tarball files:
+$ tar -caf unixpathtodestination unixpathtoorigin
+(c:create, a:auto-compress based on destination filename extension,
+f:filesystem not tape media)
+(you may append: --exclude "unixpathtoexclusion1" --exclude
+"unixpathtoexclusion2")
+List Tarball contents
+$ tar -tvf unixpathtoorigin
+(-tzvf may be required if file is .gz)
+Un-Tarball file:
+$ tar -xf unixpathtoorigin
+(extracts them to current (.) directory?)
+# get system disk information
+di
+#List directory size:
+#(s:summarise, h:humanreadable)
+ $ du -sh
+#List disk usage:
+#(shows % of usage)
+#(add "| sort -nr" to show in descending order by size)
+#(Recursively!) List files older than 7 days ago:
+ $ df -h
+$ find unixpathtofiles -name PATTERN
+$ find unixpathtofiles -mtime +7 -print
+(Recursively!) List and Remove files older than 7 days ago:
+$ find unixpathtofiles -mtime +7 -print -exec rm {} \;
+(Recursively!) Remove files (without listing) older than 7 days ago:
+$ find unixpathtofiles -mtime +7 -exec rm {} \;
+Modify file/directory ownership recursively:
+$ chown -R username:groupname unixpathtotarget
+Modify file/directory access-rights code recursively:
+$ chmod -R code unixpathtotarget
+(code: consists of 3 digits - userprivileges, groupprivileges,
+everybodyelseprivileges)
+(each digit: may have the value 4 (read), 2 (write), 1 (execute), 0
+(none), or the sum of any such values that coexist)
+* * * * * * * * * *
+* UBUNTU SPECIFIC:
+* * * * * * * * * *
+Automatically update the GRUB2 boot menu entries:
+$ sudo update-grub
+Manually Modify the GRUB2 boot menu entries:
+$ sudo vi /boot/grub/grub.cfg
+(if you have multiple partitions, you need to do this on the partition
+that holds GRUB2, probably the one where you most recently installed a
+copy of Ubuntu)
+Create a user and its primary group:
+$ adduser username
+Delete a user and its primary group:
+$ deluser username
+(does not delete their home directory)
+Change current user's password:
+$ passwd
+Lock/Unlock a user's account (applies to the root user too):
+$ passwd -l username
+$ passwd -u username
+Create a custom group:
+$ addgroup groupname
+Delete a custom group:
+$ delgroup groupname
+Add an existing user to a group:
+$ adduser username groupname
+Add an existing user to the root user's group:
+$ adduser username admin
+List members in a group:
+$ members groupname
+Modify/Remove existing group members:
+$ vi /etc/group
+Add an existing user to the root group:
+$ adduser username admin
+SVN Checkout
+ e.g.
+ cd ~/
+ mkdir tmp
+ cd tmp
+ svn checkout file:///src/ukuya/trunk    (or: svn co file:///src/dev2.15)
+SymLink
+ln -s /path/to/real/file /path/to/non-existant/file
+to remove, just rm as usual
+SSHfs
+sshfs username@192.168.1.253:/var/www/cronus_personal <folder location>
+Main configuration files:
+/etc/apache2/apache2.conf
+/etc/apache2/httpd.conf
+screen
+Ctrl+a,| splits the viewport
+Ctrl+a,tab and Ctrl+a,shift+tab navigates between viewports
+Ctrl+a,c creates a new window
+Ctrl+a,n and Ctrl+a,shift+n flips the window in the current viewport
+Create Distribution (new user login) / Backup (unchanged logins) to ISO:
+http://www.geekconnection.org/remastersys/ubuntu.html
+1 of 2
+screen Quick Reference
+Getting in
+start a new screen session:screen
+attach to a running session: screen -r
+the “ultimate attach”: screen -dRR (Attaches to a screen session. If
+the session isattached elsewhere, detaches that other display. If no
+session exists, creates one. Ifmultiple sessions exist, uses the first
+one.)
+Escape key
+All screen commnds are prefixed by an escape key, by default C-a
+(that’s Control-a,
+sometimes written ^A). To send a literal C-a to the programs in
+screen, use C-a a.
+Getting out
+detach: C-a d
+exit screen: exit all of the programs in screen.
+force-exit screen: C-a C-\ (not recommended)
+Help
+See help: C-a ? (lists keybindings)
+Window Management
+create new window: C-a c
+change to last active window: C-a C-a
+change to window by number: C-a <number> (only for windows 0 to 9)
+change to window by number or name: C-a ' <number or title>
+change to next window in list: C-a n
+change to previous window in list: C-a p
+see window list: C-a "
+kill current window: C-a k (not recommended)
+Split screen
+split display: C-a S
+jump to next display region: C-a tab
+remove current region: C-a X
+remove all regions but the current one: C-a Q
+Misc
+redraw window: C-a C-l
+enter copy mode: C-a [ (also used for viewing scrollback buffer)
+paste: C-a ]
+monitor window for activity: C-a M
+monitor window for silence: C-a _
+enter digraph: C-a C-v
+lock (password protect) display: C-a x
+enter screen command: C-a :
+#Resize the monitor resolution of a VirtualBox Guest Ubuntu OS:
+#1. mount the VBOXADDITIONS cd
+#2. run the appropriate .run file
+#3. modified /etc/X11/xorg.conf
+#4. Replace the "Screen" section with something like this, then
+customise the resolution and reboot.
+#
+#Section "Screen"
+#  Identifier   "Default Screen"
+#  Monitor      "Configured Monitor"
+#  Device      "Configured Video Device"
+#  DefaultDepth    24
+#  SubSection      "Display"
+#     Depth           24
+#     Modes           "1280x1024"
+#  EndSubSection
+#EndSection
+# on ubuntu9.04, upgrading from subversion 1.5 to 1.6
+sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 6298AD34413576CB
+#deb http://ppa.launchpad.net/anders-kaseorg/subversion-1.6/ubuntu jaunty main
+#deb-src http://ppa.launchpad.net/anders-kaseorg/subversion-1.6/ubuntu
+jaunty main
+# on virtualbox, allow guest to connect to router and get an address via DHCP
+# switch Network Adapter to Bridge
+# on virtualbox, move system to a larger hard drive
+# typically, use a dynamically expanding virtual hard drive, with an
+arbitrarily large size
+# if really stuck to the outer limits of that drive, mount a new
+virtual hard drive as defined above then migrate the system using
+gparted
+# boot from new virtual hard drive
+# turn a USB drive or other physical partition into a bootable .VMDK
+file using VirtualBox
+sudo VBoxManage internalcommands createrawvmdk -filename
+/root/.VirtualBox/HardDisks/PREFERREDFILENAME.vmdk -rawdisk
+/dev/SDWHATEVERHERE -register
+#rsync
+rsync --verbose  --progress --stats --compress \
+  --recursive --times --perms --links --delete \
+  --password-file <password_file> \
+  <backups_directory> <user>@<remote_host>::<module_name>
+#Let’s see the various switches meaning:
+#–verbose Turn on verbose output
+#–progress show progress during transfer
+#–stats give some file-transfer stats
+#–compress With this option, rsync compresses the file data as it is
+sent to the destination machine, which reduces the amount of data
+being transmitted.
+#–recursive recurse into directories
+#-times preserve modification times
+#–perms preserve permissions
+# –links  copy symlinks as symlinks
+#–delete delete extraneous files from dest dirs
+# –password-file <password_file> This option allows you to provide a
+password in a file for accessing an rsync daemon. The file must not be
+world read- able. It should contain just the password as a single
+line. For example:
+##su
+##echo MyPassword > secretFile
+##chmod 600 secretFile
+##<backups_directory>
+#specifies the directory that contains the files to be transferred,
+for example /backups/*
+##<user>@<remote_host>::<module_name>
+#specifies the user name, the remote host and the rsync server module
+name to use, for #examplejohn@www.mybackupserver.com::backups_storage
+# Ubuntu & phpmyadmin
+# remember to ln -s /usr/share/phpmyadmin /var/www/phpmyadmin
+# Ubuntu can't connect to DNS
+sudo vi /etc/resolv.conf
+# TEMPORARY solution: add the following lines, which is google's dns
+nameserver 8.8.8.8
+# save then
+sudo ifdown -a
+sudo ifup -a
+# PERSISTENT solution:
+sudo apt-get install resolvconf
+sudo vi /etc/resolvconf/resolv.conf.d/base
+# type in the temporary solution here
+# reboot then check to see if it worked
+# get hard drive UUIDs
+ls -l /dev/disk/by-uuid
+# or
+blkid /dev/sda1
+# or
+vol_id -u /dev/sda1
+# generate UUID
+uuidgen
+# change hard drive UUID
+# if the address of the disc is /dev/sda1
+# and where UUID is the output of
+tune2fs /dev/sda1 -U UUID
+Here’s the quick and easy way to re-enable Grub.
+1) Boot off the LiveCD
+2) Open a Terminal and type in the following commands, noting that the
+first command will put you into the grub “prompt”, and the next 3
+commands will be executed there. Also note that hd0,0 implies the
+first hard drive and the first partition on that drive, which is where
+you probably installed grub to during installation. If not, then
+adjust accordingly.
+sudo grub
+> root (hd0,0)
+> setup (hd0)
+> exit
+# see running CPU processes
+top
+# change kernal scheduler priority (CPI priority?)
+# minimum priority for PID=someNumber
+renice +20 PID
+# maximum priority for PID=someNumber
+renice -20 PID
+# see i/o (disc) priority, for process=PID
+ionice -pPID
+# set i/o (disc) priority, for process=PID
+# set priority: real time
+ionice -c1 -pPID
+# set priority: best effort
+ionice -c2 -pPID
+# set priority: idle
+ionice -c3 -pPID
+# set a limit on cpu consumption per process
+sudo apt-get install cpulimit
+# create bootable usb drives
+sudo apt-get install unetbootin
+# get hardware information and benchmarks in GUI
+hardinfo
+# get RAM information
+sudo dmidecode --type 17
+#count number of files & directories in a directory
+ls -A | wc -l
+Do anything as the root user, instead of as yourself:
+$ sudo anything
+Algebraically add the date and time to a new filename:
+$ whatever `date +%Y-%m-%d-%H%M-%Z%z` whatever
+Become the root user:
+$ sudo -i
+Copy from a MySQL database to a .sql file:
+$ mysqldump -C -user=username --password=password databasename > sqlfilename.sql
+(This method is insecure and exposes the password momentarily in the
+process table.)
+(--defaults-extra-file=
+YOURMYDOTCNFFILENAMEWHEREUSERANDPASSWORDARESTORED DATABASENAME
+--ignore-table=DATABASENAME.
+TABLENAME)
+(--all-databases, -A > sqlfilename.sql is useful!)
+(-C compress)
+Copy from a .sql file to a MySQL database:
+$ mysql --user=USERNAME --password=PASSWORD DATABASENAME
+--ignore-table=DATABASENAME.TABLENAME < FILENAME
+Copy from a MySQL database to a MySQL database:
+$ mysqldump -C --host=SERVERURIOFORIGIN --user=USERNAME
+--password=PASSWORD ORIGINDATABASENAME | mysql
+--host=SERVERURIOFDESTINATION --user=USERNAME --password=PASSWORD
+DESTINATIONDATABASENAME
+(ensure that users have access on both sides!)
+Copy a file across two machines:
+$ scp username@uri:unixpathtoorigin username@uri:unixpathtodestination
+Tarball files:
+$ tar -caf unixpathtodestination unixpathtoorigin
+(c:create, a:auto-compress based on destination filename extension,
+f:filesystem not tape media)
+(you may append: --exclude "unixpathtoexclusion1" --exclude
+"unixpathtoexclusion2")
+List Tarball contents
+$ tar -tvf unixpathtoorigin
+(-tzvf may be required if file is .gz)
+Un-Tarball file:
+$ tar -xf unixpathtoorigin
+(extracts them to current (.) directory?)
+# get system disk information
+di
+#List directory size:
+#(s:summarise, h:humanreadable)
+ $ du -sh
+#List disk usage:
+#(shows % of usage)
+#(add "| sort -nr" to show in descending order by size)
+#(Recursively!) List files older than 7 days ago:
+ $ df -h
+$ find unixpathtofiles -name PATTERN
+$ find unixpathtofiles -mtime +7 -print
+(Recursively!) List and Remove files older than 7 days ago:
+$ find unixpathtofiles -mtime +7 -print -exec rm {} \;
+(Recursively!) Remove files (without listing) older than 7 days ago:
+$ find unixpathtofiles -mtime +7 -exec rm {} \;
+Modify file/directory ownership recursively:
+$ chown -R username:groupname unixpathtotarget
+Modify file/directory access-rights code recursively:
+$ chmod -R code unixpathtotarget
+(code: consists of 3 digits - userprivileges, groupprivileges,
+everybodyelseprivileges)
+(each digit: may have the value 4 (read), 2 (write), 1 (execute), 0
+(none), or the sum of any such values that coexist)
+* * * * * * * * * *
+* WINDOWS SPECIFIC:
+* * * * * * * * * *
+Install Ubuntu into a virtual partition on a real partition already containing Windows:
+- use Wubi for the installation
+- use EasyBCD to fix the bootloader if necessary
+* * * * * * * * * *
+* UBUNTU SPECIFIC:
+* * * * * * * * * *
+Automatically update the GRUB2 boot menu entries:
+$ sudo update-grub
+Manually Modify the GRUB2 boot menu entries:
+$ sudo vi /boot/grub/grub.cfg
+(if you have multiple partitions, you need to do this on the partition
+that holds GRUB2, probably the one where you most recently installed a
+copy of Ubuntu)
+Create a user and its primary group:
+$ adduser username
+Delete a user and its primary group:
+$ deluser username
+(does not delete their home directory)
+Change current user's password:
+$ passwd
+Lock/Unlock a user's account (applies to the root user too):
+$ passwd -l username
+$ passwd -u username
+Create a custom group:
+$ addgroup groupname
+Delete a custom group:
+$ delgroup groupname
+Add an existing user to a group:
+$ adduser username groupname
+Add an existing user to the root user's group:
+$ adduser username admin
+List members in a group:
+$ members groupname
+Modify/Remove existing group members:
+$ vi /etc/group
+Add an existing user to the root group:
+$ adduser username admin
+SVN Checkout
+ e.g.
+ cd ~/
+ mkdir tmp
+ cd tmp
+ svn checkout file:///src/ukuya/trunk    (or: svn co file:///src/dev2.15)
+SymLink
+ln -s /path/to/real/file /path/to/non-existant/file
+to remove, just rm as usual
+SSHfs
+sshfs username@192.168.1.253:/var/www/cronus_personal <folder location>
+Main configuration files:
+/etc/apache2/apache2.conf
+/etc/apache2/httpd.conf
+screen
+Ctrl+a,| splits the viewport
+Ctrl+a,tab and Ctrl+a,shift+tab navigates between viewports
+Ctrl+a,c creates a new window
+Ctrl+a,n and Ctrl+a,shift+n flips the window in the current viewport
+Create Distribution (new user login) / Backup (unchanged logins) to ISO:
+http://www.geekconnection.org/remastersys/ubuntu.html
+1 of 2
+screen Quick Reference
+Getting in
+start a new screen session:screen
+attach to a running session: screen -r
+the “ultimate attach”: screen -dRR (Attaches to a screen session. If
+the session isattached elsewhere, detaches that other display. If no
+session exists, creates one. Ifmultiple sessions exist, uses the first
+one.)
+Escape key
+All screen commnds are prefixed by an escape key, by default C-a
+(that’s Control-a,
+sometimes written ^A). To send a literal C-a to the programs in
+screen, use C-a a.
+Getting out
+detach: C-a d
+exit screen: exit all of the programs in screen.
+force-exit screen: C-a C-\ (not recommended)
+Help
+See help: C-a ? (lists keybindings)
+Window Management
+create new window: C-a c
+change to last active window: C-a C-a
+change to window by number: C-a <number> (only for windows 0 to 9)
+change to window by number or name: C-a ' <number or title>
+change to next window in list: C-a n
+change to previous window in list: C-a p
+see window list: C-a "
+kill current window: C-a k (not recommended)
+Split screen
+split display: C-a S
+jump to next display region: C-a tab
+remove current region: C-a X
+remove all regions but the current one: C-a Q
+Misc
+redraw window: C-a C-l
+enter copy mode: C-a [ (also used for viewing scrollback buffer)
+paste: C-a ]
+monitor window for activity: C-a M
+monitor window for silence: C-a _
+enter digraph: C-a C-v
+lock (password protect) display: C-a x
+enter screen command: C-a :
+#Resize the monitor resolution of a VirtualBox Guest Ubuntu OS:
+#1. mount the VBOXADDITIONS cd
+#2. run the appropriate .run file
+#3. modified /etc/X11/xorg.conf
+#4. Replace the "Screen" section with something like this, then
+customise the resolution and reboot.
+#
+#Section "Screen"
+#  Identifier   "Default Screen"
+#  Monitor      "Configured Monitor"
+#  Device      "Configured Video Device"
+#  DefaultDepth    24
+#  SubSection      "Display"
+#     Depth           24
+#     Modes           "1280x1024"
+#  EndSubSection
+#EndSection
+# on ubuntu9.04, upgrading from subversion 1.5 to 1.6
+sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 6298AD34413576CB
+#deb http://ppa.launchpad.net/anders-kaseorg/subversion-1.6/ubuntu jaunty main
+#deb-src http://ppa.launchpad.net/anders-kaseorg/subversion-1.6/ubuntu
+jaunty main
+# on virtualbox, allow guest to connect to router and get an address via DHCP
+# switch Network Adapter to Bridge
+# on virtualbox, move system to a larger hard drive
+# typically, use a dynamically expanding virtual hard drive, with an
+arbitrarily large size
+# if really stuck to the outer limits of that drive, mount a new
+virtual hard drive as defined above then migrate the system using
+gparted
+# boot from new virtual hard drive
+# turn a USB drive or other physical partition into a bootable .VMDK
+file using VirtualBox
+sudo VBoxManage internalcommands createrawvmdk -filename
+/root/.VirtualBox/HardDisks/PREFERREDFILENAME.vmdk -rawdisk
+/dev/SDWHATEVERHERE -register
+#rsync
+rsync --verbose  --progress --stats --compress \
+  --recursive --times --perms --links --delete \
+  --password-file <password_file> \
+  <backups_directory> <user>@<remote_host>::<module_name>
+#Let’s see the various switches meaning:
+#–verbose Turn on verbose output
+#–progress show progress during transfer
+#–stats give some file-transfer stats
+#–compress With this option, rsync compresses the file data as it is
+sent to the destination machine, which reduces the amount of data
+being transmitted.
+#–recursive recurse into directories
+#-times preserve modification times
+#–perms preserve permissions
+# –links  copy symlinks as symlinks
+#–delete delete extraneous files from dest dirs
+# –password-file <password_file> This option allows you to provide a
+password in a file for accessing an rsync daemon. The file must not be
+world read- able. It should contain just the password as a single
+line. For example:
+##su
+##echo MyPassword > secretFile
+##chmod 600 secretFile
+##<backups_directory>
+#specifies the directory that contains the files to be transferred,
+for example /backups/*
+##<user>@<remote_host>::<module_name>
+#specifies the user name, the remote host and the rsync server module
+name to use, for #examplejohn@www.mybackupserver.com::backups_storage
+# Ubuntu & phpmyadmin
+# remember to ln -s /usr/share/phpmyadmin /var/www/phpmyadmin
+# Ubuntu can't connect to DNS
+sudo vi /etc/resolv.conf
+# TEMPORARY solution: add the following lines, which is google's dns
+nameserver 8.8.8.8
+# save then
+sudo ifdown -a
+sudo ifup -a
+# PERSISTENT solution:
+sudo apt-get install resolvconf
+sudo vi /etc/resolvconf/resolv.conf.d/base
+# type in the temporary solution here
+# reboot then check to see if it worked
+# get hard drive UUIDs
+ls -l /dev/disk/by-uuid
+# or
+blkid /dev/sda1
+# or
+vol_id -u /dev/sda1
+# generate UUID
+uuidgen
+# change hard drive UUID
+# if the address of the disc is /dev/sda1
+# and where UUID is the output of
+tune2fs /dev/sda1 -U UUID
+Here’s the quick and easy way to re-enable Grub.
+1) Boot off the LiveCD
+2) Open a Terminal and type in the following commands, noting that the
+first command will put you into the grub “prompt”, and the next 3
+commands will be executed there. Also note that hd0,0 implies the
+first hard drive and the first partition on that drive, which is where
+you probably installed grub to during installation. If not, then
+adjust accordingly.
+sudo grub
+> root (hd0,0)
+> setup (hd0)
+> exit
+# see running CPU processes
+top
+# change kernal scheduler priority (CPI priority?)
+# minimum priority for PID=someNumber
+renice +20 PID
+# maximum priority for PID=someNumber
+renice -20 PID
+# see i/o (disc) priority, for process=PID
+ionice -pPID
+# set i/o (disc) priority, for process=PID
+# set priority: real time
+ionice -c1 -pPID
+# set priority: best effort
+ionice -c2 -pPID
+# set priority: idle
+ionice -c3 -pPID
+# set a limit on cpu consumption per process
+sudo apt-get install cpulimit
+# create bootable usb drives
+sudo apt-get install unetbootin
+# get hardware information and benchmarks in GUI
+hardinfo
+# get RAM information
+sudo dmidecode --type 17
+#count number of files & directories in a directory
+ls -A | wc -l
+#Vim and Gvim
+sudo apt-get install vim vim-gnome
+# contents of ~/.vimrcset expandtab
+set tabstop=2
+set shiftwidth=2
+set autoindent
+set smartindent
+set number
+au BufWinLeave * mkview
+au BufWinEnter * silent loadview
+# contents of ~/.gvimrcset gfn=Bitstream\ Vera\ Sans\ Mono\ 8
+colorscheme desert
+# Compiz, and the detailed Settings Manager
+sudo apt-get install compiz compizconfig-settings-manager
+# network two computers using only their ethernet ports and a cable (crossover cable required if NICs are not Gigabit Ethernet enabled)
+#Use a crossover cable to connect the two machines, NIC <--> NIC. I assume: the NIC interface on both machines is called eth0. Computer A has ip address 192.168.0.1 Computer B has ip address 192.168.0.2
+#On Computer A:
+/sbin/ifconfig eth0 192.168.0.1 netmask 255.255.255.0 up
+/sbin/route add -host 192.168.0.2 eth0
+#On Computer B:
+/sbin/ifconfig eth0 192.168.0.2 netmask 255.255.255.0 up
+/sbin/route add -host 192.168.0.1 eth0
+#Now on Computer A you should be able to ping Computer B (and vice versa):ping 192.168.0.2
+#Connecting to a Linux GUI via SSH.
+#client$ 
+ssh -X [IP of host]
+#host$ 
+sudo apt-get install xnest
+#host$ 
+Xnest :1 -geometry 1280×810 -query localhost
+#Further resources: http://www.faqs.org/docs/Linux-HOWTO/XDMCP-HOWTO.html
+# Setting up a cronjob
+crontab -e
+# where 
+* * * * * whateverCommandNormallyRunsInTheShell
+# corresponds to
+Entry
+Description
+Equivalent To
+@yearly (or @annually)
+Run once a year, midnight, Jan. 1
+0 0 1 1 * *
+@monthly
+Run once a month, midnight, first of month
+0 0 1 * * *
+@weekly
+Run once a week, midnight on Sun
+0 0 * * 0 *
+@daily
+Run once a day, midnight
+0 0 * * * *
+@hourly
+Run once an hour, beginning of hour
+0 * * * * *
+@reboot
+Run at startup
+*    *    *    *    *   *    command to be executed
+-    -    -    -    -   -
+|    |    |    |    |   |
+|    |    |    |    |   +- Year (optional)
+|    |    |    |    +----- day of week (0 - 6) (Sunday=0)
+|    |    |    +---------- month (1 - 12)
+|    |    +--------------- day of month (1 - 31)
+|    +-------------------- hour (0 - 23)
++------------------------- min (0 - 59)
+#How To Check If Cron Job Was Fired
+#Grep system log for CRON:
+grep CRON /var/log/syslog
+#How To Get LINUX Release Version / Name
+cat /etc/lsb-release
+#iPhone tethering on ubuntu (10.04)
+#!/bin/bash# add a repository, update packages, install drivers
+sudo add-apt-repository ppa:pmcenery/ppa
+sudo apt-get update
+sudo apt-get install gvfs ipheth-dkms ipheth-utils
+# try this below only if the above does not work.
+#  sudo apt-get remove gvfs ipheth-dkms ipheth-utils
+#  sudo apt-get install gvfs ipheth-dkms ipheth-utils
+# mount an address (/tmp/ram) in RAM as a directory
+mkdir -p /tmp/ram
+sudo mount -t tmpfs -o size=512M tmpfs /tmp/ram/
+# a typically existing RAM address for temp files
+/dev/shm/
+# simple and high-performing programing for delta compression of binary files (not super-fantastic with executable
+code - see Google case study)
+sudo apt-get install bsdiff
+# alternatives:
+# sudo apt-get install xdelta
+# google for xdiff-1.5.1.tar.gz (works with PHP, 1.4.1 did not in one case; but not very space efficient)
+# check linux version
+cat /proc/version
+uname -a
+cat /etc/issue
+cat /etc/lsb-release
+# or lsb_release -a
+# BASH: show CWD (current working directory) behind prompt  / format prompt
+PS1="/w $ "
+# .htaccess disable browsable directories
+Options -Indexes
