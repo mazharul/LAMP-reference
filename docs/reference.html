@@ -8,14 +8,19 @@ Main file can be found here (https://docs.google.com/document/pub?id=1ksDMSDjaI8
 
 
 
-do anything as the root user, instead of as yourself:
-$ sudo anything
-Algebraically add the date and time to a new filename:
+<div>do anything as the root user, instead of as yourself:</div>
+
+<label>Algebraically add the date and time to a new filename:</label>
 $ whatever `date +%Y-%m-%d-%H%M-%Z%z` whatever
-Become the root user:
+<label>Become the root user:<label>
 $ sudo -i
-Copy from a MySQL database to a .sql file:
+<label>Become the super user:<label>
+$ sudo su
+
+<label>Copy from a MySQL database to a .sql file:</label>
 $ mysqldump -C -user=username --password=password databasename > sqlfilename.sql
+
+<span id="comments">
 (This method is insecure and exposes the password momentarily in the
 process table.)
 (--defaults-extra-file=
@@ -24,10 +29,11 @@ YOURMYDOTCNFFILENAMEWHEREUSERANDPASSWORDARESTORED DATABASENAME
 TABLENAME)
 (--all-databases, -A > sqlfilename.sql is useful!)
 (-C compress)
-Copy from a .sql file to a MySQL database:
+<span>
+<label>Copy from a .sql file to a MySQL database:</label>
 $ mysql --user=USERNAME --password=PASSWORD DATABASENAME
 --ignore-table=DATABASENAME.TABLENAME < FILENAME
-Copy from a MySQL database to a MySQL database:
+<label>Copy from a MySQL database to a MySQL database:<label>
 $ mysqldump -C --host=SERVERURIOFORIGIN --user=USERNAME
 --password=PASSWORD ORIGINDATABASENAME | mysql
 --host=SERVERURIOFDESTINATION --user=USERNAME --password=PASSWORD
