@@ -1,18 +1,34 @@
 <!DOCTYPE html>
 <head>
-<title>Hardware related commands</title>
-<script type="text/javascript" src="/library/shjs.js"></script>
-<script type="text/javascript" src="/library/shell.js"></script>
-<link type="text/css" rel="stylesheet" href="/library/css/shcss.css">
+<title>LAMP references</title>
+<script type="text/javascript" src="../library/shjs.js"></script>
+<script type="text/javascript" src="../library/shell.js"></script>
+<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
+<link type="text/css" rel="stylesheet" href="../library/css/shcss.css">
+<link type="text/css" rel="stylesheet" href="../library/css/main.css">
 </head>
-    <body>
+    <body onload="sh_highlightDocument();">
+        <header>
+        <div id="headbar"><span class="breadcrumbs">overview</span>
+            <div id="socialButton">
+                <div id="tweetButton"><span id="googleIt"><g:plusone size="medium" href="http://developer.protishobdo.com/lamp/"></g:plusone></span><span id="tweetIt" style="padding-top:5px;"><a href="http://twitter.com/share" class="twitter-share-button" data-text="#protishobdo LAMP references." data-count="horizontal" data-via="mazharul_anwar">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script><span><span id="likeIt"><fb:like href="http://developer.protishobdo.com/lamp/" layout="button_count" show_faces="true" width="100" font="verdana"></fb:like></span>
+                </div>
+           </div>
+        
+        </div> 
+    </header>
         <section>
-            <div><!-- starting of content -->
+            <div id="containter"> <!--start of container -->
+                <div id="content"> <!-- start of content div-->
                 <div>Check Ram Speed and Type</div>
                 <div><pre class="sh_sh">$ sudo dmidecode --type 17 | more </pre></div>
-      		<div>open terminal</div>
-		<div><pre class="sh_sh">gnome-terminal --window-with-profile=profilename</pre></div>
-	      </div> <!-- eof content -->
+      		    <div>Open Terminal with profile name</div>
+		        <div><pre class="sh_sh">$ gnome-terminal --window-with-profile=profilename</pre></div>
+		        <!-- new command goes here -->
+		        
+		        <!-- eof adding new command -->
+	        </div> <!-- eof content -->
+	      </div><!-- eof container -->
         </section>
     </body>
 </html>
