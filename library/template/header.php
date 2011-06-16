@@ -2,9 +2,9 @@
 <head>
 <title>LAMP references</title>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="../library/shjs.js"></script>
-<script type="text/javascript" src="../library/shell.js"></script>
-<script type="text/javascript" src="../library/colorbox.min.js"></script>
+<script type="text/javascript" src="../library/js/shjs.js"></script>
+<script type="text/javascript" src="../library/js/shell.js"></script>
+<script type="text/javascript" src="../library/js/colorbox.min.js"></script>
 <script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
 <link type="text/css" rel="stylesheet" href="../library/css/shcss.css">
 <link type="text/css" rel="stylesheet" href="../library/css/main.css">
@@ -12,7 +12,6 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$('a#logIn').click(function(){
-		console.log("clicked");
 		$('#logIn').colorbox({transition:'fade', speed:500});
 	});
 
