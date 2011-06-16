@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<head>
-<title>LAMP references</title>
-<script type="text/javascript" src="../library/shjs.js"></script>
-<script type="text/javascript" src="../library/shell.js"></script>
-<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
-<link type="text/css" rel="stylesheet" href="../library/css/shcss.css">
-<link type="text/css" rel="stylesheet" href="../library/css/main.css">
-</head>
-    <body onload="sh_highlightDocument();">
-    <header>
-    <?php include('../library/template/header.php'); ?>
-    </header>
+ <?php include('../library/template/header.php'); ?>
         <section>
             <div id="containter"> <!--start of container -->
                 <div id="content"> <!-- start of content div-->

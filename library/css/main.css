@@ -76,7 +76,7 @@ bottom: -0.4em; /*  to not disrupt the vertical rhythm */
 
 #content {
 max-width:50em;
-margin:1em auto 0 auto;
+margin:1em 0;
 text-align:left;
 padding:0 .5em;
 }
