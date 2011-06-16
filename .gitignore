@@ -1,3 +1,4 @@
 #ignoring colorbox files
 
-
+#ignoring documented file
+library/js/shjs-sytexhighlighter-documented.js
