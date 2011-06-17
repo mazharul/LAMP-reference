@@ -2,6 +2,11 @@
         <section>
             <div id="containter"> <!--start of container -->
                 <div id="content"> <!-- start of content div-->
+                    <!--Ajax requests-->
+                    <div id="divToAppend">
+
+                    </div>
+
                     <div class="content-holder">
                         <div>Check Ram Speed and Type</div>
                         <div><pre class="sh_sh">$ sudo dmidecode --type 17 | more </pre></div>
